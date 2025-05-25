@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>북원맵</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 16px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 2rem;
+      color: #333;
+    }
+    #searchContainer {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    #searchInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    #searchInput:focus {
+      border-color: #0078d7;
+    }
+    #searchButton {
+      display: none; /* 버튼 숨김, 엔터로만 검색 */
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .building-button {
+      background-color: #fff;
+      border: 2px solid #0078d7;
+      border-radius: 10px;
+      padding: 24px 0;
+      font-size: 1.1rem;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.25s, color 0.25s;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    }
+    .building-button:hover {
+      background-color: #0078d7;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>북원맵</h1>
+
+  <div id="searchContainer">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="예) 1-1, 2-3, 창의실 등을 입력하세요"
+      autocomplete="off"
+    />
+    <button id="searchButton" onclick="handleSearch()">검색</button>
+  </div>
+
+  <div class="grid" id="buildingGrid">
+    <div class="building-button" onclick="goToBuilding('1학년동.html')">1학년동</div>
+    <div class="building-button" onclick="goToBuilding('2학년동.html')">2학년동</div>
+    <div class="building-button" onclick="goToBuilding('3학년동.html')">3학년동</div>
+    <div class="building-button" onclick="goToBuilding('창의관.html')">창의관</div>
+    <div class="building-button" onclick="goToBuilding('체육관.html')">체육관</div>
+    <div class="building-button" onclick="goToBuilding('도서관.html')">도서관</div>
+  </div>
+
+  <script>
+    // 검색어 → 이동 페이지 매핑
+    const searchMap = {
+      // 1학년동 시설
+      "1-1": "1학년동.html", "1학년1반": "1학년동.html", "1학년 1반": "1학년동.html",
+      "1-2": "1학년동.html", "1학년2반": "1학년동.html", "1학년 2반": "1학년동.html",
+      "1-3": "1학년동.html", "1학년3반": "1학년동.html", "1학년 3반": "1학년동.html",
+      "1-4": "1학년동.html", "1학년4반": "1학년동.html", "1학년 4반": "1학년동.html",
+      "1-5": "1학년동.html", "1학년5반": "1학년동.html", "1학년 5반": "1학년동.html",
+      "1-6": "1학년동.html", "1학년6반": "1학년동.html", "1학년 6반": "1학년동.html",
+      "1-7": "1학년동.html", "1학년7반": "1학년동.html", "1학년 7반": "1학년동.html",
+      "1-8": "1학년동.html", "1학년8반": "1학년동.html", "1학년 8반": "1학년동.html",
+      "1-9": "1학년동.html", "1학년9반": "1학년동.html", "1학년 9반": "1학년동.html",
+      "1-10": "1학년동.html", "1학년10반": "1학년동.html", "1학년 10반": "1학년동.html",
+      "1-11": "1학년동.html", "1학년11반": "1학년동.html", "1학년 11반": "1학년동.html",
+      // 2학년동 시설
+      "2-1": "2학년동.html", "2학년1반": "2학년동.html", "2학년 1반": "2학년동.html",
+      "2-2": "2학년동.html", "2학년2반": "2학년동.html", "2학년 2반": "2학년동.html",
+      "2-3": "2학년동.html", "2학년3반": "2학년동.html", "2학년 3반": "2학년동.html",
+      "2-4": "2학년동.html", "2학년4반": "2학년동.html", "2학년 4반": "2학년동.html",
+      "2-5": "2학년동.html", "2학년5반": "2학년동.html", "2학년 5반": "2학년동.html",
+      "2-6": "2학년동.html", "2학년6반": "2학년동.html", "2학년 6반": "2학년동.html",
+      "2-7": "2학년동.html", "2학년7반": "2학년동.html", "2학년 7반": "2학년동.html",
+      "2-8": "2학년동.html", "2학년8반": "2학년동.html", "2학년 8반": "2학년동.html",
+      "2-9": "2학년동.html", "2학년9반": "2학년동.html", "2학년 9반": "2학년동.html",
+      "2-10": "2학년동.html", "2학년10반": "2학년동.html", "2학년 10반": "2학년동.html",
+      "2-11": "2학년동.html", "2학년11반": "2학년동.html", "2학년 11반": "2학년동.html",
+      // 3학년동 시설
+      "3-1": "3학년동.html", "3학년1반": "3학년동.html", "3학년 1반": "3학년동.html",
+      "3-2": "3학년동.html", "3학년2반": "3학년동.html", "3학년 2반": "3학년동.html",
+      "3-3": "3학년동.html", "3학년3반": "3학년동.html", "3학년 3반": "3학년동.html",
+      "3-4": "3학년동.html", "3학년4반": "3학년동.html", "3학년 4반": "3학년동.html",
+      "3-5": "3학년동.html", "3학년5반": "3학년동.html", "3학년 5반": "3학년동.html",
+      "3-6": "3학년동.html", "3학년6반": "3학년동.html", "3학년 6반": "3학년동.html",
+      "3-7": "3학년동.html", "3학년7반": "3학년동.html", "3학년 7반": "3학년동.html",
+      "3-8": "3학년동.html", "3학년8반": "3학년동.html", "3학년 8반": "3학년동.html",
+      "3-9": "3학년동.html", "3학년9반": "3학년동.html", "3학년 9반": "3학년동.html",
+      "3-10": "3학년동.html", "3학년10반": "3학년동.html", "3학년 10반": "3학년동.html",
+      "3-11": "3학년동.html", "3학년11반": "3학년동.html", "3학년 11반": "3학년동.html",
+      "3-12": "3학년동.html", "3학년12반": "3학년동.html", "3학년 12반": "3학년동.html",
+      "당직실": "3학년동.html", "방송실": "3학년동.html", 
+      "국향반": "3학년동.html", "국향반1": "3학년동.html", "국향반2": "3학년동.html",
+      "쉼배움터1": "3학년동.html", "쉼배움터2": "3학년동.html", "3학년동 쉼배움터": "3학년동.html",
+      "별관동": "3학년동.html",
+      // 창의관 주요실
+      "창의실": "창의관.html",
+      "창의 연구실": "창의관.html",
+      // 체육관 주요시설
+      "체육관": "체육관.html",
+      "체육실": "체육관.html",
+      // 도서관 주요시설
+      "도서관": "도서관.html",
+      "열람실": "도서관.html"
+    };
+
+    function handleSearch() {
+      const input = document.getElementById("searchInput").value.trim();
+      const targetPage = searchMap[input];
+      if (targetPage) {
+        location.href = targetPage;
+      } else {
+        alert("검색 결과가 없습니다.");
+      }
+    }
+
+    function goToBuilding(page) {
+      location.href = page;
+    }
+
+    // 엔터키 눌렀을 때 검색 실행
+    document.getElementById("searchInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    });
+  </script>
+</body>
+</html>
