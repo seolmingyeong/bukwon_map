@@ -32,11 +32,9 @@
       transition: border-color 0.3s;
     }
     #searchInput:focus {
-      border-color: #0078d7;
+      border-color: #ccc;
     }
-    #searchButton {
-      display: none; /* 버튼 숨김, 엔터로만 검색 */
-    }
+    
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -46,7 +44,7 @@
     }
     .building-button {
       background-color: #fff;
-      border: 2px solid #0078d7;
+      border: 2px solid #000000;
       border-radius: 10px;
       padding: 24px 0;
       font-size: 1.1rem;
@@ -57,9 +55,15 @@
       box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
     }
     .building-button:hover {
-      background-color: #0078d7;
-      color: white;
+      background-color: #ccc;
     }
+    #searchButton {
+      width: 60px;
+      height: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+  }
+</style>
   </style>
 </head>
 <body>
@@ -69,10 +73,10 @@
     <input
       type="text"
       id="searchInput"
-      placeholder="예) 1-1, 2-3, 창의실 등을 입력하세요"
+      placeholder="검색 후 엔터키를 누르세요"
       autocomplete="off"
     />
-    <button id="searchButton" onclick="handleSearch()">검색</button>
+    <button id="searchButton" onclick="handleSearch()">  ⌕  </button>
   </div>
 
   <div class="grid" id="buildingGrid">
@@ -99,6 +103,18 @@
       "1-9": "1학년동.html", "1학년9반": "1학년동.html", "1학년 9반": "1학년동.html",
       "1-10": "1학년동.html", "1학년10반": "1학년동.html", "1학년 10반": "1학년동.html",
       "1-11": "1학년동.html", "1학년11반": "1학년동.html", "1학년 11반": "1학년동.html",
+      "위클래스": "1학년동.html", "상담실": "1학년동.html",
+      "미술실2": "1학년동.html", "1학년동 미술실": "1학년동.html",
+      "보건실": "1학년동.html",
+      "행정실": "1학년동.html",
+      "교장실": "1학년동.html",
+      "제2교무실": "1학년동.html",
+      "학생안전부": "1학년동.html",
+      "체육부": "1학년동.html",
+      "진로교육부": "1학년동.html",
+      "교육연구부": "1학년동.html",
+      "1학년동": "1학년동.html", "모듈러": "1학년동.html",
+
       // 2학년동 시설
       "2-1": "2학년동.html", "2학년1반": "2학년동.html", "2학년 1반": "2학년동.html",
       "2-2": "2학년동.html", "2학년2반": "2학년동.html", "2학년 2반": "2학년동.html",
@@ -111,6 +127,9 @@
       "2-9": "2학년동.html", "2학년9반": "2학년동.html", "2학년 9반": "2학년동.html",
       "2-10": "2학년동.html", "2학년10반": "2학년동.html", "2학년 10반": "2학년동.html",
       "2-11": "2학년동.html", "2학년11반": "2학년동.html", "2학년 11반": "2학년동.html",
+      "2학년 교무실": "2학년동.html",
+      "쉼배움터3": "2학년동.html", "쉼배움터4": "2학년동.html", "쉼배움터5": "2학년동.html",
+      "2학년동": "2학년동.html", "신관동": "2학년동.html",
       // 3학년동 시설
       "3-1": "3학년동.html", "3학년1반": "3학년동.html", "3학년 1반": "3학년동.html",
       "3-2": "3학년동.html", "3학년2반": "3학년동.html", "3학년 2반": "3학년동.html",
@@ -127,16 +146,30 @@
       "당직실": "3학년동.html", "방송실": "3학년동.html", 
       "국향반": "3학년동.html", "국향반1": "3학년동.html", "국향반2": "3학년동.html",
       "쉼배움터1": "3학년동.html", "쉼배움터2": "3학년동.html", "3학년동 쉼배움터": "3학년동.html",
-      "별관동": "3학년동.html",
+      "3학년동": "3학년동.html", "별관동": "3학년동.html",
       // 창의관 주요실
-      "창의실": "창의관.html",
-      "창의 연구실": "창의관.html",
+      "시청각실": "창의관.html", "사회중점실": "창의관.html",
+      "가사실": "창의관.html",
+      "미술실1": "창의관.html",
+      "멀티정보실": "창의관.html",
+      "생명실험실": "창의관.html", "생명 실험실": "창의관.html",
+      "실험실": "창의관.html",
+      "교직원 라운지": "창의관.html", "교직원라운지": "창의관.html",
+      "음악실": "창의관.html", "음악실1": "창의관.html", "음악실2": "창의관.html",
+      "과학부": "창의관.html", "교육정보부": "창의관.html", "과학 교무실": "창의관.html",
+      "화학실험실": "창의관.html", "화학 실험실": "창의관.html",
+      "창의융합실": "창의관.html", "창의 융합실": "창의관.html",
+      "창의관": "창의관.html",
       // 체육관 주요시설
       "체육관": "체육관.html",
-      "체육실": "체육관.html",
+      "시설지원실": "체육관.html",
+      "인쇄실": "체육관.html",
       // 도서관 주요시설
       "도서관": "도서관.html",
-      "열람실": "도서관.html"
+      "제1교무실": "도서관.html",
+      "교무부": "도서관.html",
+      "교육과정부": "도서관.html",
+      "특색교육부": "도서관.html",
     };
 
     function handleSearch() {

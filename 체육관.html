@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>체육관</title>
+  <title>체육관 - 북원맵</title>
   <style>
     body {
       font-family: sans-serif;
@@ -11,12 +11,10 @@
       padding: 1rem;
       background-color: #fff;
     }
-    header {
+    h1 {
+      margin-top: 20px;
+      font-size: 1.8rem;
       text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #3c5a99;
     }
     .floor {
       border: 1px solid #ccc;
@@ -24,35 +22,34 @@
       padding: 1rem;
       margin-bottom: 1rem;
     }
-    .floor h2 {
-      color: #3c5a99;
-      margin-bottom: 0.5rem;
-    }
-    .highlight {
-      border: 2px solid red;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      50% {
-        border-color: transparent;
-      }
-    }
+
   </style>
 </head>
 <body>
 
-  <header>체육관</header>
+  <h1>체육관(국향관)</h1>
+  <!-- 돌아가기 버튼 -->
+  <button onclick="history.back()" style="
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+  ">
+    돌아가기
+  </button>
+
 
   <div class="floor">
-    <h2>1층</h2>
     <ul>
       <li>체육관</li>
-      <li>체육 교무실</li>
-      <li>계단</li>
+      <li>시설지원실</li>
+      <li>인쇄실</li>
     </ul>
   </div>
-
-  <a href="index.html">← 돌아가기</a>
 
 </body>
 </html>

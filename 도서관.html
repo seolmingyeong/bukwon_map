@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>도서관</title>
+  <title>도서관 - 북원맵</title>
+
   <style>
     body {
       font-family: sans-serif;
@@ -11,55 +12,58 @@
       padding: 1rem;
       background-color: #fff;
     }
-    header {
+
+    h1 {
+      margin-top: 20px;
+      font-size: 1.8rem;
       text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #3c5a99;
     }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 1.8rem;
+    }
+
     .floor {
       border: 1px solid #ccc;
       border-radius: 8px;
       padding: 1rem;
       margin-bottom: 1rem;
     }
-    .floor h2 {
-      color: #3c5a99;
-      margin-bottom: 0.5rem;
-    }
-    .highlight {
-      border: 2px solid red;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      50% {
-        border-color: transparent;
-      }
-    }
+
   </style>
 </head>
 <body>
 
-  <header>도서관</header>
+  <h1>도서관</h1>
 
+  <!-- 돌아가기 버튼 -->
+  <button onclick="history.back()" style="
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+  ">
+    돌아가기
+  </button>
+
+  <h2>1층</h2>
   <div class="floor">
-    <h2>1층</h2>
-    <ul>
+    <ui>
       <li>도서관</li>
-      <li>계단</li>
-    </ul>
+    <ui>
   </div>
 
+  <h2>2층</h2>
   <div class="floor">
-    <h2>2층</h2>
     <ul>
-      <li>교무실</li>
-      <li>계단</li>
+      <li>제1교무실(교무부, 교육과정부, 특색교육부) </li>
     </ul>
   </div>
-
-  <a href="index.html">← 돌아가기</a>
 
 </body>
 </html>
